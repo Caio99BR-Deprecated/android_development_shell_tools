@@ -1,0 +1,73 @@
+#!/bin/bash
+#
+# Copyright 2015-2018 Adrian DC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# === File Uploader to transfer.sh ===
+function uploadtransfersh()
+{
+  # Usage
+  if [ -z "${1}" ]; then
+    echo '';
+    echo ' Usage: uploadtransfersh <file_path> [remote_file_name] (Upload to transfer.sh)';
+    echo '';
+    return;
+  fi;
+
+  # Variables
+  local file_path="${1}";
+  local remote_name;
+  local remote_path;
+  local remote_link;
+
+  # File full path
+  file_path="$(readlink -e "${file_path}")";
+
+  # Check if file exists
+  if [ -z "${file_path}" ]; then
+    echo '';
+    echo " uploadtransfersh: Error: File not found";
+    echo '';
+    return;
+  fi;
+
+  # Check if it is a directory
+  if [ -d "${file_path}" ]; then
+    echo '';
+    echo " uploadtransfersh: Error: The '${file_path}' is a directory";
+    echo '';
+    return;
+  fi
+
+  # Check if user want a custom file name in remote
+  if [ -z "${2}" ]; then
+    remote_name="${file_path}";
+  else
+    remote_name="${2}";
+  fi;
+
+  # Avoid random chars that aren't supported on URL links
+  remote_path="$(basename "${remote_name}" | sed -e 's/[^a-zA-Z0-9._-]/-/g')";
+
+  # Upload the file
+  remote_link="$(curl --upload-file "${file_path}" "https://transfer.sh/${remote_path}")";
+
+  # Output link
+  if [[ "${remote_link}" == 'https://transfer.sh/'*"${remote_path}" ]]; then
+    echo '';
+    echo " uploadtransfersh: ${remote_link}";
+    echo '';
+  fi;
+}

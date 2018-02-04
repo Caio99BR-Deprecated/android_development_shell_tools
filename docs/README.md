@@ -1204,6 +1204,11 @@ source <(curl -Ls https://github.com/AdrianDC/android_development_shell_tools/ra
   * **listmega** *[options]* [*<b>\[List&nbsp;remote&nbsp;files&nbsp;on&nbsp;MEGA.nz\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/mega.rc)
 
 ---
+> ### <span class="group_label">[sources/uploads/transfersh.rc](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/transfersh.rc)</span> ###
+>
+  * **uploadtransfersh** *&lt;file_path&gt; [remote_file_name]* [*<b>\[Upload&nbsp;to&nbsp;transfer.sh\]&nbsp;</b>*](https://github.com/AdrianDC/android_development_shell_tools/blob/master/sources/uploads/transfersh.rc)
+
+---
 </details>
 
 <details>
